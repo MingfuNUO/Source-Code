@@ -27,7 +27,6 @@ for i in train_text:
 data_all['review_seg'] = a
 
 #remove stopwords
-#stops = set(stopwords.words("english"))
 stop_words_path = "SMART_stopwords.txt"
 def get_stop_words():
     return set([item.strip() for item in open(stop_words_path,'r').readlines()])

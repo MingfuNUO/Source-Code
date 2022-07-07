@@ -30,12 +30,12 @@ for i in range(len(review_list)):
         output = a['items'][0]
         labels.append(output['sentiment'])
         label_prediction.append(output['positive_prob'])
-        print("第 " + str(i + 1) + "条评论已完成分析")
+        print("No." + str(i + 1) + "review has been processed")
     except:
         data.drop(data.index[i],inplace=True)
         pass
 
 data['label']=labels   # 0 Negative 1 Neutral 2 Positive
 data['positive_prob']=label_prediction
-data.to_csv('reviews_details_all_US_Apple_fitbit_89274_last.csv',encoding="utf-8")
+data.to_csv('',encoding="utf-8")
 
