@@ -4,24 +4,22 @@ import json
 import time
 import numpy
 
-# 读取数据
-data=pd.read_csv('fitbit_89274_last.csv')
+data=pd.read_csv('.csv')
 review_list=data.review
-# 设置最后输出的标签（0 1 2）及正向预测概率
+
 labels=[]
 label_prediction =[]
 
-# 读入 access token ，该数值在第一个文件中生成
 access_token='24.def0b4f1b57ad636ca638ba559b45992.2592000.1650805234.282335-25847279'
 http=urllib3.PoolManager()
 url='https://aip.baidubce.com/rpc/2.0/nlp/v1/sentiment_classify?access_token='+access_token
 print(url)
-# 调用服务进行分析
+
 for i in range(len(review_list)):
     if (i + 1) % 2 == 0:
-        time.sleep(1)  # 每分析两条数据就暂停1秒，因为百度AI免费版的QRS上限是2，如果付费可以达到20，这里相应的修改
+        time.sleep(1)
     params={'text':review_list[i]}
-    encoded_data = json.dumps(params).encode('utf-8')#GKB
+    encoded_data = json.dumps(params).encode('utf-8')
     request = http.request('POST',
                            url,
                            body=encoded_data,
@@ -36,8 +34,8 @@ for i in range(len(review_list)):
     except:
         data.drop(data.index[i],inplace=True)
         pass
-# 分析结果输出，label只有3中 0 1 2
-data['label']=labels   # 0 负向 1 中性 2 正向
-data['positive_prob']=label_prediction # 正向预测的概率
+
+data['label']=labels   # 0 Negative 1 Neutral 2 Positive
+data['positive_prob']=label_prediction
 data.to_csv('reviews_details_all_US_Apple_fitbit_89274_last.csv',encoding="utf-8")
 
